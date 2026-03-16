@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Día de la Zona | Fútbol y Cohesiones</title>
+    
+    <!-- Tailwind CSS para diseño rápido, moderno y responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Poppins para un toque juvenil y claro -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome para iconos deportivos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Configuración personalizada de Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#1E3A8A',
+                            light: '#3B82F6',
+                            gray: '#F3F4F6',
+                            dark: '#1F2937'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Animaciones base */
+        html { scroll-behavior: smooth; }
+        
+        body {
+            background-color: #F9FAFB;
+            color: #1F2937;
+            overflow-x: hidden;
+        }
+
+        /* Clases para animación al hacer scroll */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: opacity, visibility;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Estilos de tarjeta tipo dashboard */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+        }
+
+        /* ESTILOS DE IMPRESIÓN */
+        @media print {
+            /* Ocultar todo el contenido de la web */
+            body > *:not(#printArea) {
+                display: none !important;
+            }
+            
+            /* Mostrar solo el área de impresión */
+            #printArea {
+                display: block !important;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: white;
+            }
+
+            /* Forzar estilos limpios para el documento impreso */
+            .print-doc {
+                padding: 40px;
+                font-family: 'Poppins', sans-serif;
+                color: black;
+            }
+            .print-doc h1 { font-size: 28px; border-bottom: 2px solid #1E3A8A; padding-bottom: 10px; margin-bottom: 30px; }
+            .print-doc .row { margin-bottom: 20px; }
+            .print-doc .label { font-weight: bold; font-size: 14px; color: #4B5563; text-transform: uppercase; }
+            .print-doc .value { font-size: 18px; padding: 10px; background: #F3F4F6; border-radius: 8px; margin-top: 5px; }
+            .print-doc .logo-sim { text-align: center; font-size: 40px; margin-bottom: 20px; color: #1E3A8A; }
+        }
+        
+        /* Ocultar area de impresión en pantalla normal */
+        #printArea { display: none; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Menú de Navegación Flotante -->
+    <nav class="fixed w-full z-50 transition-all duration-300 glass-card bg-white/90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <i class="fa-solid fa-futbol text-brand-light text-2xl"></i>
+                    <span class="font-bold text-xl text-brand-blue tracking-tight">Día de la Zona</span>
+                </div>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#dinamica" class="text-gray-600 hover:text-brand-light font-medium transition">Torneo</a>
+                    <a href="#cohesiones" class="text-gray-600 hover:text-brand-light font-medium transition">Cohesiones</a>
+                    <a href="#reglas" class="text-gray-600 hover:text-brand-light font-medium transition">Reglas</a>
+                    <a href="#estructura" class="text-gray-600 hover:text-brand-light font-medium transition">Grupos</a>
+                    <a href="#registro" class="bg-brand-light hover:bg-brand-blue text-white px-4 py-2 rounded-full font-medium transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5">Registro</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1️⃣ HERO PRINCIPAL -->
+    <header class="relative pt-24 pb-16 md:pt-32 md:pb-24 lg:pt-40 lg:pb-32 bg-gradient-to-br from-brand-dark via-brand-blue to-slate-800 overflow-hidden">
+        <!-- Decoración de fondo -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-10 left-10 text-9xl"><i class="fa-solid fa-futbol"></i></div>
+            <div class="absolute bottom-10 right-10 text-9xl"><i class="fa-solid fa-flag"></i></div>
+        </div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white fade-in-section is-visible">
+            <div class="inline-block p-4 bg-white/10 rounded-full mb-6 backdrop-blur-sm border border-white/20">
+                <i class="fa-solid fa-trophy text-yellow-400 text-4xl"></i>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-4 drop-shadow-lg">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-white">⚽ Día de la Zona</span>
+            </h1>
+            <p class="text-2xl md:text-3xl font-light text-blue-100 mb-10 tracking-wide">"Fútbol y Cohesiones"</p>
+            
+            <!-- Tarjetas de Información Destacada -->
+            <div class="flex flex-col sm:flex-row justify-center gap-6 mb-12">
+                <div class="glass-card bg-white/10 p-6 rounded-2xl w-full sm:w-64 border border-white/20 hover:bg-white/20 transition cursor-default">
+                    <i class="fa-regular fa-clock text-3xl mb-3 text-blue-300"></i>
+                    <h3 class="text-sm uppercase tracking-wider text-blue-200 font-semibold mb-1">Horario</h3>
+                    <p class="text-2xl font-bold">12:00 PM</p>
+                </div>
+                <div class="glass-card bg-white/10 p-6 rounded-2xl w-full sm:w-64 border border-white/20 hover:bg-white/20 transition cursor-default">
+                    <i class="fa-solid fa-hourglass-half text-3xl mb-3 text-blue-300"></i>
+                    <h3 class="text-sm uppercase tracking-wider text-blue-200 font-semibold mb-1">Duración Total</h3>
+                    <p class="text-2xl font-bold">1:15 horas</p>
+                </div>
+            </div>
+
+            <p class="max-w-2xl mx-auto text-lg md:text-xl text-blue-50 mb-12 leading-relaxed">
+                El torneo se divide en dos grupos de 6 equipos. Cada equipo representa un país y jugará partidos rápidos de fútbol mientras presentan cohesiones culturales entre cada partido.
+            </p>
+
+            <a href="#registro" class="inline-flex items-center gap-3 bg-gradient-to-r from-green-400 to-green-500 hover:from-green-500 hover:to-green-600 text-white font-bold text-lg md:text-xl py-4 px-10 rounded-full shadow-[0_0_20px_rgba(74,222,128,0.4)] transition transform hover:scale-105 hover:shadow-[0_0_30px_rgba(74,222,128,0.6)]">
+                Registrar Cohesión <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- 2️⃣ DINÁMICA DEL TORNEO -->
+    <section id="dinamica" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in-section">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-dark mb-4">Dinámica del Torneo</h2>
+                <div class="w-24 h-1 bg-brand-light mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Tarjeta 1 -->
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center fade-in-section">
+                    <div class="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-users text-2xl text-brand-light"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2 text-brand-dark">Fase de Grupos</h3>
+                    <p class="text-gray-600">2 grupos conformados por 6 equipos cada uno.</p>
+                </div>
+                <!-- Tarjeta 2 -->
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center fade-in-section" style="transition-delay: 100ms;">
+                    <div class="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa-regular fa-calendar-check text-2xl text-brand-light"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2 text-brand-dark">Partidos Regulares</h3>
+                    <p class="text-gray-600">5 partidos regulares por equipo en la primera fase.</p>
+                </div>
+                <!-- Tarjeta 3 -->
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center fade-in-section" style="transition-delay: 200ms;">
+                    <div class="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-sitemap text-2xl text-brand-light"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2 text-brand-dark">Fase Final</h3>
+                    <p class="text-gray-600">Los mejores avanzan a Semifinales y posteriormente la Gran Final.</p>
+                </div>
+                <!-- Tarjeta 4 -->
+                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center fade-in-section" style="transition-delay: 300ms;">
+                    <div class="w-16 h-16 mx-auto bg-purple-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa-solid fa-masks-theater text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2 text-brand-dark">Intermedios</h3>
+                    <p class="text-gray-600">Entre cada partido los equipos presentan una cohesión cultural.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3️⃣ DINÁMICA DE COHESIONES -->
+    <section id="cohesiones" class="py-20 bg-gray-50 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="w-full lg:w-1/2 fade-in-section">
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-dark mb-4 flex items-center gap-4">
+                        <i class="fa-solid fa-masks-theater text-purple-600"></i> Cohesiones Culturales
+                    </h2>
+                    <p class="text-xl text-gray-600 mb-8 border-l-4 border-purple-500 pl-4 py-1">
+                        Duración estricta: <strong class="text-brand-dark">3 minutos</strong> por presentación.
+                    </p>
+                    
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 uppercase tracking-wider">¿Qué puedes presentar?</h3>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                            <div class="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center flex-shrink-0 text-pink-500"><i class="fa-solid fa-music"></i></div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Un Bailable</h4>
+                                <p class="text-sm text-gray-600">Coreografía representativa del país asignado.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 text-blue-500"><i class="fa-solid fa-face-laugh-squint"></i></div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Sketch Futbolero</h4>
+                                <p class="text-sm text-gray-600">Actuación cómica o dramática sobre el fútbol de la región.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 p-4 bg-white rounded-xl shadow-sm">
+                            <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0 text-orange-500"><i class="fa-solid fa-earth-americas"></i></div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Tradición Local</h4>
+                                <p class="text-sm text-gray-600">Representación de una costumbre o tradición del país.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2 fade-in-section" style="transition-delay: 200ms;">
+                    <div class="bg-brand-dark rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-8 opacity-10">
+                            <i class="fa-solid fa-box-open text-9xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-6 relative z-10 text-brand-light">Materiales Permitidos</h3>
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
+                            <li class="flex items-center gap-3 bg-white/10 p-3 rounded-lg"><i class="fa-solid fa-check text-green-400"></i> Bocina (opcional)</li>
+                            <li class="flex items-center gap-3 bg-white/10 p-3 rounded-lg"><i class="fa-solid fa-check text-green-400"></i> Distintivos</li>
+                            <li class="flex items-center gap-3 bg-white/10 p-3 rounded-lg"><i class="fa-solid fa-check text-green-400"></i> Cal</li>
+                            <li class="flex items-center gap-3 bg-white/10 p-3 rounded-lg"><i class="fa-solid fa-check text-green-400"></i> Conos</li>
+                            <li class="flex items-center gap-3 bg-white/10 p-3 rounded-lg"><i class="fa-solid fa-check text-green-400"></i> Palos de escoba</li>
+                            <li class="flex items-center gap-3 bg-white/10 p-3 rounded-lg"><i class="fa-solid fa-check text-green-400"></i> Material creativo extra</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4️⃣ REGLAS DEL TORNEO -->
+    <section id="reglas" class="py-20 bg-brand-blue text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in-section">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Reglas del Torneo</h2>
+                <div class="w-24 h-1 bg-yellow-400 mx-auto rounded-full mb-8"></div>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <span class="bg-white/20 px-6 py-2 rounded-full font-semibold text-lg backdrop-blur-sm"><i class="fa-solid fa-stopwatch mr-2"></i> Partidos: 5 minutos</span>
+                    <span class="bg-white/20 px-6 py-2 rounded-full font-semibold text-lg backdrop-blur-sm"><i class="fa-solid fa-users mr-2"></i> Jugadores: 10 en cancha</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Composición -->
+                <div class="col-span-1 glass-card bg-white/10 p-8 rounded-3xl fade-in-section border border-white/20">
+                    <h3 class="text-2xl font-bold mb-6 text-yellow-400 border-b border-white/20 pb-4">Composición</h3>
+                    <ul class="space-y-4">
+                        <li class="flex justify-between items-center bg-black/20 p-3 rounded-lg">
+                            <span class="font-medium">Cadena</span> <span class="bg-white text-brand-blue w-8 h-8 rounded-full flex items-center justify-center font-bold">3</span>
+                        </li>
+                        <li class="flex justify-between items-center bg-black/20 p-3 rounded-lg">
+                            <span class="font-medium">Conquista</span> <span class="bg-white text-brand-blue w-8 h-8 rounded-full flex items-center justify-center font-bold">3</span>
+                        </li>
+                        <li class="flex justify-between items-center bg-black/20 p-3 rounded-lg">
+                            <span class="font-medium">Escuadrón</span> <span class="bg-white text-brand-blue w-8 h-8 rounded-full flex items-center justify-center font-bold">3</span>
+                        </li>
+                        <li class="flex justify-between items-center bg-black/20 p-3 rounded-lg">
+                            <span class="font-medium">Juvenil o comodín</span> <span class="bg-white text-brand-blue w-8 h-8 rounded-full flex items-center justify-center font-bold">1</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Reglas Especiales -->
+                <div class="col-span-1 lg:col-span-2 glass-card bg-white/10 p-8 rounded-3xl fade-in-section border border-white/20" style="transition-delay: 200ms;">
+                    <h3 class="text-2xl font-bold mb-6 text-yellow-400 border-b border-white/20 pb-4">Reglas Especiales de Cancha</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
+                        <div class="flex items-start gap-3"><i class="fa-solid fa-ban text-red-400 mt-1"></i> <p><strong>No hay portero</strong></p></div>
+                        <div class="flex items-start gap-3"><i class="fa-solid fa-hand text-red-400 mt-1"></i> <p><strong>No se puede usar mano ni brazo</strong></p></div>
+                        <div class="flex items-start gap-3"><i class="fa-solid fa-shoe-prints text-green-400 mt-1"></i> <p>Saques de banda con pie y rasos</p></div>
+                        <div class="flex items-start gap-3"><i class="fa-solid fa-futbol text-green-400 mt-1"></i> <p>Gol válido solo si entra a <strong>ras de pasto</strong></p></div>
+                        <div class="flex items-start gap-3"><i class="fa-solid fa-arrows-rotate text-blue-300 mt-1"></i> <p>Después de gol se saca desde portería</p></div>
+                        <div class="flex items-start gap-3"><i class="fa-solid fa-location-crosshairs text-blue-300 mt-1"></i> <p>Solo el saque inicial es en el centro</p></div>
+                        <div class="flex items-start gap-3"><i class="fa-solid fa-flag text-blue-300 mt-1"></i> <p>Hay tiros de esquina</p></div>
+                        <div class="flex items-start gap-3"><i class="fa-solid fa-whistle text-yellow-300 mt-1"></i> <p>Faltas desde el lugar donde ocurrieron</p></div>
+                        <div class="flex items-start gap-3"><i class="fa-solid fa-ruler-horizontal text-yellow-300 mt-1"></i> <p>Barrera a <strong>5 pasos largos</strong></p></div>
+                        <div class="flex items-start gap-3"><i class="fa-solid fa-ruler-horizontal text-yellow-300 mt-1"></i> <p>Rivales a <strong>3 pasos</strong> en saques</p></div>
+                        <div class="flex items-start gap-3 sm:col-span-2"><i class="fa-solid fa-exchange-alt text-green-400 mt-1"></i> <p><strong>Cambios ilimitados</strong></p></div>
+                    </div>
+                    
+                    <!-- Penales -->
+                    <div class="mt-6 p-5 bg-red-500/20 border border-red-500/50 rounded-xl">
+                        <h4 class="font-bold text-xl text-red-300 mb-2"><i class="fa-solid fa-exclamation-triangle"></i> Penales</h4>
+                        <p class="mb-1">• Se cobran desde media cancha sin portero.</p>
+                        <p>• <strong>Penal automático</strong> si alguien entra al área de portería.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5️⃣ ESTRUCTURA DEL TORNEO -->
+    <section id="estructura" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in-section">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-dark mb-4">Estructura del Torneo</h2>
+                <div class="w-24 h-1 bg-brand-light mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Grupos -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                <!-- Grupo A -->
+                <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden fade-in-section">
+                    <div class="bg-blue-600 text-white text-center py-4 font-bold text-2xl tracking-wide">
+                        GRUPO A
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition"><span class="text-2xl">🇦🇷</span> <span class="font-semibold text-lg text-gray-700">Argentina</span></li>
+                            <li class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition"><span class="text-2xl">🇩🇪</span> <span class="font-semibold text-lg text-gray-700">Alemania</span></li>
+                            <li class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition"><span class="text-2xl">🇵🇹</span> <span class="font-semibold text-lg text-gray-700">Portugal</span></li>
+                            <li class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition"><span class="text-2xl">🇫🇷</span> <span class="font-semibold text-lg text-gray-700">Francia</span></li>
+                            <li class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition"><span class="text-2xl">🇪🇸</span> <span class="font-semibold text-lg text-gray-700">España</span></li>
+                            <li class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition"><span class="text-2xl">EN</span> <span class="font-semibold text-lg text-gray-700">Inglaterra</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Grupo B -->
+                <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden fade-in-section" style="transition-delay: 200ms;">
+                    <div class="bg-green-600 text-white text-center py-4 font-bold text-2xl tracking-wide">
+                        GRUPO B
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition"><span class="text-2xl">🇨🇴</span> <span class="font-semibold text-lg text-gray-700">Colombia</span></li>
+                            <li class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition"><span class="text-2xl">🇨🇦</span> <span class="font-semibold text-lg text-gray-700">Canadá</span></li>
+                            <li class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition"><span class="text-2xl">🇧🇷</span> <span class="font-semibold text-lg text-gray-700">Brasil</span></li>
+                            <li class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition"><span class="text-2xl">🇺🇸</span> <span class="font-semibold text-lg text-gray-700">USA</span></li>
+                            <li class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition"><span class="text-2xl">🇲🇽</span> <span class="font-semibold text-lg text-gray-700">México</span></li>
+                            <li class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition"><span class="text-2xl">🇺🇾</span> <span class="font-semibold text-lg text-gray-700">Uruguay</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Playoffs -->
+            <div class="bg-white rounded-3xl shadow-xl p-8 lg:p-12 border border-gray-100 relative overflow-hidden fade-in-section">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-brand-light rounded-full opacity-5 -translate-y-1/2 translate-x-1/2"></div>
+                <h3 class="text-2xl font-bold text-center mb-8 text-brand-dark uppercase tracking-widest"><i class="fa-solid fa-trophy text-yellow-500 mr-2"></i> Fase de Playoffs</h3>
+                
+                <div class="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-16">
+                    <!-- Semifinales -->
+                    <div class="space-y-6 w-full md:w-auto z-10">
+                        <div class="bg-gray-50 p-4 rounded-xl border-l-4 border-blue-500 shadow-sm text-center">
+                            <p class="text-xs text-gray-500 uppercase font-bold mb-1">Semifinal 1</p>
+                            <p class="font-bold text-brand-dark">1° Grupo A <span class="text-gray-400 font-normal mx-2">vs</span> 2° Grupo B</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-xl border-l-4 border-green-500 shadow-sm text-center">
+                            <p class="text-xs text-gray-500 uppercase font-bold mb-1">Semifinal 2</p>
+                            <p class="font-bold text-brand-dark">1° Grupo B <span class="text-gray-400 font-normal mx-2">vs</span> 2° Grupo A</p>
+                        </div>
+                    </div>
+
+                    <div class="hidden md:flex flex-col items-center justify-center text-gray-300 z-10">
+                        <div class="w-16 border-t-2 border-gray-300"></div>
+                        <i class="fa-solid fa-chevron-right text-xl mt-[-11px]"></i>
+                    </div>
+
+                    <!-- Final -->
+                    <div class="w-full md:w-auto z-10">
+                        <div class="bg-gradient-to-r from-yellow-100 to-yellow-50 p-6 rounded-2xl border-2 border-yellow-400 shadow-md text-center transform hover:scale-105 transition">
+                            <p class="text-sm text-yellow-700 uppercase font-extrabold mb-2"><i class="fa-solid fa-star"></i> Gran Final <i class="fa-solid fa-star"></i></p>
+                            <p class="font-bold text-xl text-brand-dark">Ganador Semi 1 <br><span class="text-gray-400 font-normal text-sm">vs</span><br> Ganador Semi 2</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-10 z-10 relative">
+                    <span class="inline-block bg-brand-dark text-white px-6 py-2 rounded-full text-sm font-semibold shadow-md">
+                        <i class="fa-solid fa-clock mr-2 text-brand-light"></i> Duración Semifinal y Final: 5 minutos
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6️⃣ ORGANIZACIÓN -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in-section">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-dark mb-4">Organización</h2>
+                <div class="w-24 h-1 bg-brand-light mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Tarjeta Org 1 -->
+                <div class="bg-gray-50 rounded-2xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition fade-in-section">
+                    <div class="w-20 h-20 mx-auto bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-3xl mb-4 shadow-inner">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800">Kevin Conde</h3>
+                    <p class="text-sm font-semibold text-blue-600 mb-2">Encargado del Torneo</p>
+                    <p class="text-xs text-gray-500 bg-white py-1 px-3 rounded-full inline-block border border-gray-200">Control de tiempo</p>
+                </div>
+                <!-- Tarjeta Org 2 -->
+                <div class="bg-gray-50 rounded-2xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition fade-in-section" style="transition-delay: 100ms;">
+                    <div class="w-20 h-20 mx-auto bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-3xl mb-4 shadow-inner">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800">Mauricio Corona</h3>
+                    <p class="text-sm font-semibold text-indigo-600 mb-2">Encargado Grupo A</p>
+                    <p class="text-xs text-gray-500 bg-white py-1 px-3 rounded-full inline-block border border-gray-200">Roles y puntajes</p>
+                </div>
+                <!-- Tarjeta Org 3 -->
+                <div class="bg-gray-50 rounded-2xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition fade-in-section" style="transition-delay: 200ms;">
+                    <div class="w-20 h-20 mx-auto bg-green-100 text-green-600 rounded-full flex items-center justify-center text-3xl mb-4 shadow-inner">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800">Ricardo Martínez</h3>
+                    <p class="text-sm font-semibold text-green-600 mb-2">Encargado Grupo B</p>
+                    <p class="text-xs text-gray-500 bg-white py-1 px-3 rounded-full inline-block border border-gray-200">Roles y puntajes</p>
+                </div>
+                <!-- Tarjeta Org 4 -->
+                <div class="bg-gray-50 rounded-2xl p-6 text-center border border-gray-100 shadow-sm hover:shadow-md transition fade-in-section" style="transition-delay: 300ms;">
+                    <div class="w-20 h-20 mx-auto bg-red-100 text-red-600 rounded-full flex items-center justify-center text-3xl mb-4 shadow-inner">
+                        <i class="fa-solid fa-whistle"></i>
+                    </div>
+                    <h3 class="font-bold text-lg text-gray-800">Cuerpo Arbitral</h3>
+                    <p class="text-sm font-semibold text-red-600 mb-2">Arbitraje General</p>
+                    <p class="text-xs text-gray-500 bg-white py-1 px-3 rounded-full inline-block border border-gray-200 mt-1">3 árbitros por cancha</p>
+                    <p class="text-xs text-gray-500 bg-white py-1 px-3 rounded-full inline-block border border-gray-200 mt-1">1 responsable de cancha</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7️⃣ FORMULARIO DE REGISTRO -->
+    <section id="registro" class="py-20 bg-slate-800 relative overflow-hidden">
+        <!-- Decoración de fondo -->
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-brand-dark opacity-50"></div>
+        
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden fade-in-section">
+                
+                <!-- Encabezado del Formulario -->
+                <div class="bg-brand-blue p-8 text-center text-white border-b-8 border-brand-light">
+                    <h2 class="text-4xl font-extrabold mb-2">🎭 Registro de Cohesión</h2>
+                    <p class="text-blue-100 text-lg">Registra la actividad representativa de tu equipo.</p>
+                    <p class="inline-block mt-3 bg-red-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-sm">
+                        La presentación debe durar exactamente 3 minutos.
+                    </p>
+                </div>
+
+                <!-- Cuerpo del Formulario -->
+                <form id="cohesionForm" class="p-8 md:p-12 space-y-10">
+                    
+                    <!-- BLOQUE 1: Identidad -->
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-3 border-b-2 border-gray-100 pb-2 mb-6">
+                            <i class="fa-solid fa-id-card text-brand-light text-xl"></i>
+                            <h3 class="text-xl font-bold text-gray-800">BLOQUE 1: Identidad del Equipo</h3>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2" for="country">País asignado</label>
+                            <select id="country" required class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-light focus:border-brand-light transition bg-gray-50 outline-none appearance-none cursor-pointer">
+                                <option value="" disabled selected>Selecciona un país...</option>
+                                <optgroup label="Grupo A">
+                                    <option value="Argentina">🇦🇷 Argentina</option>
+                                        <option value="Alemania">🇩🇪 Alemania</option>
+                                        <option value="Portugal">🇵🇹 Portugal</option>
+                                        <option value="Francia">🇫🇷 Francia</option>
+                                        <option value="España">🇪🇸 España</option>
+                                        <option value="Inglaterra">EN Inglaterra</option>
+                                    </optgroup>
+                                    <optgroup label="Grupo B">
+                                        <option value="Colombia">🇨🇴 Colombia</option>
+                                        <option value="Canadá">🇨🇦 Canadá</option>
+                                        <option value="Brasil">🇧🇷 Brasil</option>
+                                        <option value="USA">🇺🇸 USA</option>
+                                        <option value="México">🇲🇽 México</option>
+                                    <option value="Uruguay">🇺🇾 Uruguay</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- BLOQUE 2: Detalles -->
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-3 border-b-2 border-gray-100 pb-2 mb-6">
+                            <i class="fa-solid fa-list-check text-brand-light text-xl"></i>
+                            <h3 class="text-xl font-bold text-gray-800">BLOQUE 2: Detalles de la Presentación</h3>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-4">Tipo de cohesión</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <label class="flex items-center p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 transition">
+                                    <input type="radio" name="cohesionType" value="Un bailable" required class="w-5 h-5 text-brand-blue focus:ring-brand-light">
+                                    <span class="ml-3 font-medium text-gray-700">Un bailable</span>
+                                </label>
+                                <label class="flex items-center p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 transition">
+                                    <input type="radio" name="cohesionType" value="Un sketch tipo futbolero" class="w-5 h-5 text-brand-blue focus:ring-brand-light">
+                                    <span class="ml-3 font-medium text-gray-700">Sketch futbolero</span>
+                                </label>
+                                <label class="flex items-center p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 transition">
+                                    <input type="radio" name="cohesionType" value="Representación de una tradición" class="w-5 h-5 text-brand-blue focus:ring-brand-light">
+                                    <span class="ml-3 font-medium text-gray-700">Tradición del país</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2" for="description">Descripción de la actividad</label>
+                            <textarea id="description" required rows="4" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-light focus:border-brand-light transition bg-gray-50 outline-none resize-none" placeholder="Describe brevemente lo que harán..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- BLOQUE 3: Logística -->
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-3 border-b-2 border-gray-100 pb-2 mb-6">
+                            <i class="fa-solid fa-box text-brand-light text-xl"></i>
+                            <h3 class="text-xl font-bold text-gray-800">BLOQUE 3: Logística y Materiales</h3>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2" for="orgMaterials">Material requerido de la organización</label>
+                            <input type="text" id="orgMaterials" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-light focus:border-brand-light transition bg-gray-50 outline-none" placeholder="Ej. Conos, cal (Si no requieres nada, deja en blanco)">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2" for="ownMaterials">Distintivos o material propio:</label>
+                            <textarea id="ownMaterials" rows="3" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-light focus:border-brand-light transition bg-gray-50 outline-none resize-none" placeholder="Ej. Llevaremos bocina propia y banderas..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Botón de Envío / Impresión -->
+                    <div class="pt-6">
+                        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-extrabold text-xl py-5 rounded-2xl shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 flex justify-center items-center gap-3">
+                            <i class="fa-solid fa-print"></i> 🟩 REGISTRAR COHESIÓN
+                        </button>
+                        <p class="text-center text-sm text-gray-500 mt-4"><i class="fa-solid fa-circle-info"></i> Al hacer clic, se generará una ficha limpia lista para imprimir o guardar como PDF.</p>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 text-center">
+        <p>© 2026 Día de la Zona. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- CONTENEDOR OCULTO PARA IMPRESIÓN -->
+    <div id="printArea" class="print-doc">
+        <!-- El contenido se inyectará aquí con JavaScript -->
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Animaciones de Scroll (Fade In)
+        document.addEventListener("DOMContentLoaded", function() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in-section').forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+        // Lógica de Impresión del Formulario
+        const form = document.getElementById('cohesionForm');
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Evita recargar la página o enviar al servidor
+            
+            // Obtener valores del formulario
+            const country = document.getElementById('country').value;
+            
+            // Obtener el radio button seleccionado
+            const typeRadios = document.getElementsByName('cohesionType');
+            let cohesionType = '';
+            for(let i = 0; i < typeRadios.length; i++) {
+                if(typeRadios[i].checked) cohesionType = typeRadios[i].value;
+            }
+            
+            const description = document.getElementById('description').value;
+            const orgMaterials = document.getElementById('orgMaterials').value || 'Ninguno';
+            const ownMaterials = document.getElementById('ownMaterials').value || 'Ninguno';
+
+            // Obtener fecha actual para el reporte
+            const today = new Date();
+            const dateString = today.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            // Construir el HTML para el área de impresión
+            const printHTML = `
+                <div class="logo-sim">⚽🎭</div>
+                <h1>Registro de Cohesión Oficial</h1>
+                
+                <div class="row">
+                    <div class="label">Fecha de Registro</div>
+                    <div class="value">${dateString}</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">País Asignado</div>
+                    <div class="value" style="font-size: 22px; font-weight: bold; color: #1E3A8A;">${country}</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">Tipo de Cohesión (Duración: 3 min)</div>
+                    <div class="value" style="font-weight: bold;">${cohesionType}</div>
+                </div>
+
+                <div class="row">
+                    <div class="label">Descripción de la Actividad</div>
+                    <div class="value" style="white-space: pre-wrap; min-height: 80px;">${description}</div>
+                </div>
+
+                <div class="row" style="margin-top: 30px; border-top: 1px dashed #ccc; padding-top: 20px;">
+                    <h3 style="margin-bottom: 15px; color: #1E3A8A;">Requerimientos y Logística</h3>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <div class="label">Material requerido de la organización</div>
+                        <div class="value">${orgMaterials}</div>
+                    </div>
+
+                    <div>
+                        <div class="label">Distintivos o material propio</div>
+                        <div class="value" style="white-space: pre-wrap;">${ownMaterials}</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 60px; text-align: center;">
+                    <div style="width: 250px; border-bottom: 1px solid black; margin: 0 auto;"></div>
+                    <p style="margin-top: 10px; font-weight: bold;">Firma del Encargado</p>
+                </div>
+            `;
+
+            // Inyectar el HTML en el contenedor oculto
+            document.getElementById('printArea').innerHTML = printHTML;
+
+            // Abrir el diálogo de impresión del navegador
+            window.print();
+        });
+
+    </script>
+</body>
+</html>
